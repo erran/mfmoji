@@ -6,17 +6,20 @@ import MonsterFriendMojiMaker from './components/MonsterFriendMojiMaker.vue'
   <main>
     <MonsterFriendMojiMaker />
   </main>
-  <footer></footer>
 </template>
 
 <style>
 @import './assets/base.css';
+h1 {
+  font-weight: 500;
+  font-size: 2.6rem;
+  top: -10px;
+}
 
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  /*padding: 2rem;*/
-
+  padding: 2rem;
   font-weight: normal;
 }
 
@@ -46,12 +49,6 @@ a,
   body {
     display: flex;
     place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
   }
 
   header {

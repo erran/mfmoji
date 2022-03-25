@@ -1,36 +1,115 @@
-<script setup lang="ts">
-defineProps<{
-  msg: string
-}>()
-</script>
-
 <template>
-  <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
-    <p>Made with ❤️ by erran. Inspired by a <a href="https://twitter.com/mintrainmint/status/1507086119703355402?s=20&t=4Po1jh6vasgpwgN45kDBLg">cool Tweet by @mintrain</a>.</p>
+  <h1>mfmoji maker</h1>
+  <div class="mfmoji-maker">
+    <div>
+      <h3>Foreground Emoji</h3>
+      <button :class="foregroundEmoji == '⬛️' ? activeStyle : inactiveStyle" v-on:click="foregroundEmoji = '⬛️'">⬛️</button>
+      <button :class="foregroundEmoji == '⬜️' ? activeStyle : inactiveStyle" v-on:click="foregroundEmoji = '⬜️'">⬜️</button>
+      <button :class="foregroundEmoji == '🟫' ? activeStyle : inactiveStyle" v-on:click="foregroundEmoji = '🟫'">🟫</button>
+      <button :class="foregroundEmoji == '🟩' ? activeStyle : inactiveStyle" v-on:click="foregroundEmoji = '🟩'">🟩</button>
+      <button :class="foregroundEmoji == '🟥' ? activeStyle : inactiveStyle" v-on:click="foregroundEmoji = '🟥'">🟥</button>
+      <button :class="foregroundEmoji == '🟦' ? activeStyle : inactiveStyle" v-on:click="foregroundEmoji = '🟦'">🟦</button>
+      <button :class="foregroundEmoji == '🟧' ? activeStyle : inactiveStyle" v-on:click="foregroundEmoji = '🟧'">🟧</button>
+      <button :class="foregroundEmoji == '🟪' ? activeStyle : inactiveStyle" v-on:click="foregroundEmoji = '🟪'">🟪</button>
+      <button :class="foregroundEmoji == '🟨' ? activeStyle : inactiveStyle" v-on:click="foregroundEmoji = '🟨'">🟨</button>
+      <button :class="foregroundEmoji == '🟢' ? activeStyle : inactiveStyle" v-on:click="foregroundEmoji = '🟢'">🟢</button>
+      <button :class="foregroundEmoji == '🟠' ? activeStyle : inactiveStyle" v-on:click="foregroundEmoji = '🟠'">🟠</button>
+    </div>
+
+    <div>
+      <h3>Background Emoji</h3>
+      <button :class="backgroundEmoji == '⬛️' ? activeStyle : inactiveStyle" v-on:click="backgroundEmoji = '⬛️'">⬛️</button>
+      <button :class="backgroundEmoji == '⬜️' ? activeStyle : inactiveStyle" v-on:click="backgroundEmoji = '⬜️'">⬜️</button>
+      <button :class="backgroundEmoji == '🟫' ? activeStyle : inactiveStyle" v-on:click="backgroundEmoji = '🟫'">🟫</button>
+      <button :class="backgroundEmoji == '🟩' ? activeStyle : inactiveStyle" v-on:click="backgroundEmoji = '🟩'">🟩</button>
+      <button :class="backgroundEmoji == '🟥' ? activeStyle : inactiveStyle" v-on:click="backgroundEmoji = '🟥'">🟥</button>
+      <button :class="backgroundEmoji == '🟦' ? activeStyle : inactiveStyle" v-on:click="backgroundEmoji = '🟦'">🟦</button>
+      <button :class="backgroundEmoji == '🟧' ? activeStyle : inactiveStyle" v-on:click="backgroundEmoji = '🟧'">🟧</button>
+      <button :class="backgroundEmoji == '🟪' ? activeStyle : inactiveStyle" v-on:click="backgroundEmoji = '🟪'">🟪</button>
+      <button :class="backgroundEmoji == '🟨' ? activeStyle : inactiveStyle" v-on:click="backgroundEmoji = '🟨'">🟨</button>
+      <button :class="backgroundEmoji == '🟢' ? activeStyle : inactiveStyle" v-on:click="backgroundEmoji = '🟢'">🟢</button>
+      <button :class="backgroundEmoji == '🟠' ? activeStyle : inactiveStyle" v-on:click="backgroundEmoji = '🟠'">🟠</button>
+    </div>
+
+    <div>
+      <h3>Your masterpiece</h3>
+      <button v-on:click="copy(backgroundEmoji, foregroundEmoji)">Copy to clipboard</button>
+      <span class="pre-wrap">{{mfparty}}</span>
+    </div>
   </div>
+  <p>Made with ❤️ by erran. Inspired by a <a href="https://twitter.com/mintrainmint/status/1507086119703355402?s=20&t=4Po1jh6vasgpwgN45kDBLg">cool Tweet by @mintrain</a>.</p>
 </template>
 
 <style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  top: -10px;
-}
-
 h3 {
   font-size: 1.2rem;
 }
 
-.greetings h1,
-.greetings h3 {
-  text-align: center;
+#mfmoji-maker {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0 2rem;
 }
 
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
+.active-emoji {
+  border: red;
+  border-style: groove;
+}
+
+.inactive-emoji {
+  border: blue;
+  border-style: groove;
+}
+
+.pre-wrap {
+  display: block;
+  white-space: pre-wrap;
 }
 </style>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+const activeStyle = 'active-emoji';
+const inactiveStyle = 'inactive-emoji';
+// The OG by mintrain:
+const mfmoji = `🟪🟪🟪🟨🟨🟪🟪🟪
+🟪🟪🟨🟨🟨🟨🟪🟪
+🟪🟨🟨🟪🟨🟪🟨🟪
+🟨🟨🟨🟨🟨🟨🟨🟨
+🟨🟪🟨🟨🟨🟨🟪🟨
+🟨🟪🟨🟨🟨🟨🟪🟨
+🟪🟪🟨🟪🟪🟨🟪🟪
+🟪🟪🟨🟪🟪🟨🟪🟪
+`;
+
+export default defineComponent({
+  data() {
+    return {
+      backgroundEmoji: '⬛️',
+      foregroundEmoji: '⬜️',
+    };
+  },
+
+  computed: {
+    mfparty(ctx) {
+      return mfmoji.replaceAll('🟪', ctx.backgroundEmoji)
+        .replaceAll('🟨', ctx.foregroundEmoji);
+    },
+  },
+
+  methods: {
+    copy(backgroundEmoji, foregroundEmoji) {
+      window.navigator.clipboard.writeText(mfmoji.replaceAll('🟪', backgroundEmoji)
+        .replaceAll('🟨', foregroundEmoji));
+    },
+  },
+
+  setup() {
+    return {
+      activeStyle,
+      inactiveStyle,
+    };
+  },
+});
+</script>
