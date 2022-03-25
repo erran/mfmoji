@@ -93,15 +93,15 @@ export default defineComponent({
 
   computed: {
     mfparty(ctx) {
-      return mfmoji.replaceAll('🟪', ctx.backgroundEmoji)
-        .replaceAll('🟨', ctx.foregroundEmoji);
+      return mfmoji.replace(/🟪/g, ctx.backgroundEmoji)
+        .replace(/🟨/g, ctx.foregroundEmoji);
     },
   },
 
   methods: {
-    copy(backgroundEmoji, foregroundEmoji) {
-      window.navigator.clipboard.writeText(mfmoji.replaceAll('🟪', backgroundEmoji)
-        .replaceAll('🟨', foregroundEmoji));
+    copy(backgroundEmoji: string, foregroundEmoji: string) {
+      window.navigator.clipboard.writeText(mfmoji.replace(/🟪/g, backgroundEmoji)
+        .replace(/🟨/g, foregroundEmoji));
     },
   },
 
